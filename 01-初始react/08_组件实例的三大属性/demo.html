@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="test"></div>
+  <script src="../js/react.development.js"></script>
+  <script src="../js/react-dom.development.js"></script>
+  <script src="../js/babel.min.js"></script>
+  <script type="text/babel">
+    let that
+    // 1.创建class组件
+    class Weather extends React.Component{
+      constructor(props) {//此处参数应该是组件Weather new出来的实例对象传入的(new Weather('哈哈',12))  但是此处的Weather
+        super(props); //必须要调用的
+        this.state = { isHot: false } //state是一个{}
+
+        // 为了再回调函数中使用`this`,这个绑定是必不可少的
+        that = this
+        this.demo = this.demo.bind(this)
+      } //借助构造器初始化状态
+      demo() {
+        this.setState(state => ({
+          isHot: !state.isHot
+        }))
+      }
+      render() {
+        console.log(this)
+        return (
+          <div>
+            <h1 onClick={this.demo}>今天天气很{ this.state.isHot ? '炎热' : '凉爽'}</h1>  
+          </div>
+        )
+      }
+    }
+    // 2.渲染组件到页面
+    ReactDOM.render(
+      <Weather />,
+      document.getElementById('test')
+    )
+    // const title = document.getElementById('title')
+    // title.addEventListener('click', () => {
+    //   console.log('标题被点击')
+    // })
+    // title.onclick = () => {
+    //   console.log('标题被点击了')
+    // }
+
+
+    //   原生onclick   react中使用 onClick
+    //   原生onblur   react中使用 onBlur
+
+    // function demo() {
+    //   // console.log('标题被点击')
+    //   // console.log(this) //undefined (babel转换/否则为window)
+    //   console.log(that)
+    //   that.state.isHot = !that.state.isHot
+    // }
+    /* 
+    注意: 
+      1.此处dom节点上onClick驼峰写法
+      2.使用{demo}调用, **此处不能写成{demo()}  onClick={demo}只是把函数赋给节点,
+      {demo()}是将返回值(DOM未渲染就会执行)    
+    */
+  </script>
+</body>
+</html>
