@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 类中方法this的指向
+    class Person {
+      constructor(name, age) {
+        this.name = name
+        this.age = age
+      }
+      speak() {
+        console.log(this) //指向的是实例对象(由于是实例对象的调用)
+        console.log('说话的方法')
+      }
+    }
+    const p1 = new Person('张三', 111)
+    // p1.speak()  //实例对象 (此时方法中的this指向的是实例对象)
+
+    const f = p1.speak
+    f()// 此时speak方法中的this指向的是undefined  (此时的speak方法并不是由实例对象调用)
+  
+    function demo() {
+      console.log(this) //window
+    }
+    demo()
+    function demo1() {
+      'use strict'
+      console.log(this) //undefined
+    }
+    demo1()
+  
+  </script>
+</body>
+</html>

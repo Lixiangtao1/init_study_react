@@ -15,21 +15,37 @@
     let that
     // 1.创建class组件
     class Weather extends React.Component{
+      // 构造器执行几次? --- 1次
       constructor(props) {//此处参数应该是组件Weather new出来的实例对象传入的(new Weather('哈哈',12))  但是此处的Weather
+        console.log('constructor')  
         super(props); //必须要调用的
-        this.state = { isHot: false } //state是一个{}
+        this.state = { isHot: false } //state是一个{} 初始化状态
 
         // 为了再回调函数中使用`this`,这个绑定是必不可少的
         that = this
-        this.demo = this.demo.bind(this)
+        console.log('this',this)
+        this.demo = this.demo.bind(this) //修改demo方法中的this的指向
       } //借助构造器初始化状态
       demo() {
-        this.setState(state => ({
+        // console.log(this)
+        /* 
+          1.demo放在了哪里?  ---- Weather的原型对象上,供实例使用
+          2.由于demo是作为onClick的回调,所以不是通过实例调用的,是直接调用
+            类中的方法默认开启了局部的严格模式,所以demo中的this为undefined
+
+        (onClick={this.demo}是将函数赋给onClick, 点击时触发onClick执行回调,因此此处的类中的方法并不是实例对象调用)
+        */
+
+        // 获取原来的isHot的值
+        // const isHot = this.state.isHot
+        // this.state.isHot = !isHot  //注意: 状态不可直接更改,此种方式更改react不认可
+        this.setState(state => ({//借助内置API更改,(状态必须通过setState进行修改)
           isHot: !state.isHot
         }))
       }
+      // render调用几次 ---  1+n次  1是初始化的那次, n是状态更新的次数
       render() {
-        console.log(this)
+        console.log('render')
         return (
           <div>
             <h1 onClick={this.demo}>今天天气很{ this.state.isHot ? '炎热' : '凉爽'}</h1>  
