@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="test"></div>
+  <div id="test1"></div>
+  <div id="test2"></div>
+  <script src="../js/react.development.js"></script>
+  <script src="../js/react-dom.development.js"></script>
+  <script src="../js/babel.min.js"></script>
+  <!-- 引入prop-types.  用于对组件标签属性进行限制 全局会添加一个PropTypes -->
+  <script src="../js/prop-types.js"></script>
+  <script type="text/babel">
+    // 1.创建class组件
+    class Person extends React.Component{
+      constructor(props) {
+        /*构造器的两个用途 
+        1.初始化state           (可以直接在类中写赋值语句替代)
+        2.为事件处理函数绑定实例  (使用赋值语句+箭头函数替代)
+        */
+        console.log(props)
+        super(props)//如果不省略构造器,此处必须要传props
+
+        /* 构造器是否接收props,是否出传递给super, 取决于:是否希望在构造器中通过this访问props */
+      }
+      // 给类的自身添加限制
+      static propTypes = {
+        name: PropTypes.string.isRequired,  //限制name为string且为必填项
+        sex: PropTypes.string, //限制sex为string
+        age: PropTypes.number, //限制age为number
+        // speak: PropTypes.func, //限制speak为函数
+      }
+      static defaultProps = {
+        sex:'不男不女',//sex默认值为不男不女
+        age:18,//age默认18
+      }
+      render(){
+        return (
+          <ul>
+            <li>姓名:{this.props.name}</li>  
+            <li>性别:{this.props.sex}</li>  
+            <li>年龄:{this.props.age + 1}</li>  
+          </ul>
+        )
+      }
+    }
+
+    // 2.渲染组件到页面
+    ReactDOM.render(<Person name="Tom" sex="女" age={18} />, document.getElementById('test'))
+    ReactDOM.render(<Person name="Jerry" sex="男" age={23} />, document.getElementById('test1'))
+    // 批量传递props
+    const p = {name:'12', age:13}
+    ReactDOM.render(<Person {...p} />, document.getElementById('test2'))//此处{...p}并不是对象复制 只是react的特殊用法
+    
+  
+  </script>
+</body>
+</html>
