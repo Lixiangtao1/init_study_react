@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>事件处理</title>
+</head>
+<body>
+  <div id="test"></div>
+  <script src="../js/react.development.js"></script>
+  <script src="../js/react-dom.development.js"></script>
+  <script src="../js/babel.min.js"></script>
+  <!-- 引入prop-types.  用于对组件标签属性进行限制 全局会添加一个PropTypes -->
+  <script src="../js/prop-types.js"></script>
+  <script type="text/babel">
+    // 1.创建class组件
+    class Login extends React.Component {
+      handleSubmit = (event) => {
+        event.preventDefault()  //阻止表单的提交
+        alert(`用户名: ${this.userName.value}`)
+        /* 现用现取,属于非受控环境 */
+      }
+      render(){
+        return (
+          <form action="www.baidu.com" onSubmit={this.handleSubmit}>
+            用户名:<input ref={c => this.userName = c} type="text" placeholder="请输入用户名" name="userName" />
+            密码:<input ref={c => this.passWord = c } type="password" placeholder="请输入密码" name="password" />
+            <button>登录</button>
+            </form>
+        )
+      }
+    }
+    // 2.渲染组件到页面
+    ReactDOM.render(<Login />, document.getElementById('test'))
+    
+  </script>
+</body>
+</html>

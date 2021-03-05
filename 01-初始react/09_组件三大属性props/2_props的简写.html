@@ -28,7 +28,7 @@
 
         /* 构造器是否接收props,是否出传递给super, 取决于:是否希望在构造器中通过this访问props */
       }
-      // 给类的自身添加限制
+      // 给类的自身添加限制(替代直接在类上添加,简写放在类中)
       static propTypes = {
         name: PropTypes.string.isRequired,  //限制name为string且为必填项
         sex: PropTypes.string, //限制sex为string

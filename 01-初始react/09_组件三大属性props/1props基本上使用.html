@@ -31,7 +31,7 @@
       }
     }
     // 对组件中的标签属性进行类型. 必要性的限制
-    Person.propTypes = {
+    Person.propTypes = {//此propTypes是加在类上的     PropTypes为引入的prop-types库向全局暴露的
       name: PropTypes.string.isRequired,  //限制name为string且为必填项
       sex: PropTypes.string, //限制sex为string
       age: PropTypes.number, //限制age为number

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>受控组件</title>
+</head>
+<body>
+  <div id="test"></div>
+  <script src="../js/react.development.js"></script>
+  <script src="../js/react-dom.development.js"></script>
+  <script src="../js/babel.min.js"></script>
+  <!-- 引入prop-types.  用于对组件标签属性进行限制 全局会添加一个PropTypes -->
+  <script src="../js/prop-types.js"></script>
+  <script type="text/babel">
+    // 1.创建class组件
+    class Login extends React.Component {
+      state = { username:'', password:''}
+
+      handleSubmit = (event) => {
+        event.preventDefault()  //阻止表单的提交
+        alert(`用户名: ${this.state.username}`)
+        /* 
+        受控式组件:(建议使用  (不需要写ref,不会过度使用))
+          1.随这输入框的输入将值绑定到状态中(state)
+          2.在需要用的时候从状态中去取
+        */
+      }
+      // 保存用户名到状态中
+      saveUsername = (event) => {
+        // console.log('@')
+        this.setState({//实时绑定到状态中
+          username: event.target.value
+        })
+      }
+      // 保存密码到状态中
+      savePassword = (event) => {
+        this.setState({
+          username: event.target.value
+        })
+      }
+      render(){
+        return (
+          <form action="www.baidu.com" onSubmit={this.handleSubmit}>
+            用户名:<input onChange={this.saveUsername} type="text" placeholder="请输入用户名" name="userName" />
+            密码:<input onChange={this.savePassword} type="password" placeholder="请输入密码" name="password" />
+            <button>登录</button>
+            </form>
+        )
+      }
+    }
+    // 2.渲染组件到页面
+    ReactDOM.render(<Login />, document.getElementById('test'))
+    
+  </script>
+</body>
+</html>
