@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>受控组件</title>
+</head>
+<body>
+  <div id="test"></div>
+  <script src="../js/react.development.js"></script>
+  <script src="../js/react-dom.development.js"></script>
+  <script src="../js/babel.min.js"></script>
+  <!-- 引入prop-types.  用于对组件标签属性进行限制 全局会添加一个PropTypes -->
+  <script src="../js/prop-types.js"></script>
+  <script type="text/babel">
+    /* 
+    高阶函数:(如果有一个函数符合下面两个条件中的任何一个都属于高阶函数)
+      1.该函数的传参是一个函数
+      2.该函数的返回值仍然是一个函数
+    eg: Promise   setTimeout   arr.map()....
+    
+    函数的柯里化: 通过函数的调用继续返回函数的形式,实现多次接收参数,最后统一处理的函数编码形式
+    
+    
+    */
+    // 1.创建class组件
+    class Login extends React.Component {
+      state = { username:'', password:''}
+
+      handleSubmit = (event) => {
+        console.log(this.state)
+        // event.preventDefault()  //阻止表单的提交
+        alert(`用户名: ${this.state.username}`)
+      }
+
+      // 保存表单数据到状态中
+      saveFormdata = (dataType) => {
+        console.log('11111',dataType)
+        return (event) => {
+          // console.log(dataType,event.target.value)
+          this.setState = ({
+            [dataType]: event.target.value
+          })
+        }
+      }
+   
+      render(){
+        return (
+          <form action="www.baidu.com" onSubmit={this.handleSubmit}>
+            用户名:<input onChange={this.saveFormdata('username')} type="text" placeholder="请输入用户名" name="userName" />
+            密码:<input onChange={this.saveFormdata('password')} type="password" placeholder="请输入密码" name="password" />
+            <button>登录</button>
+            </form>
+        )
+      }
+    }
+    // 2.渲染组件到页面
+    ReactDOM.render(<Login />, document.getElementById('test'))
+
+    /* 
+    总结(注意): this.saveFormdata('username') 和 this.saveFormdata 的区别
+    
+      1.this.saveFormdata是将此函数 做为onChange的回调函数, 而this.saveFormdata('username')
+      是将此函数的返回值作为onChange的回调函数,此返回值return的是一个回调函数作为onChange的回调
+    
+    
+    */
+    
+  </script>
+</body>
+</html>
