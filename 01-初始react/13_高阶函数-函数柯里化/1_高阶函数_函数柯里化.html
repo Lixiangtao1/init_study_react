@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>受控组件</title>
+  <title>1_高阶函数_函数柯里化</title>
 </head>
 <body>
   <div id="test"></div>
@@ -21,6 +21,13 @@
     eg: Promise   setTimeout   arr.map()....
     
     函数的柯里化: 通过函数的调用继续返回函数的形式,实现多次接收参数,最后统一处理的函数编码形式
+    eg:function sum(a) {
+        return (b) => {
+          return (c) => {
+            return a + b + c
+          }
+        }
+      }
     
     
     */
@@ -39,7 +46,7 @@
         console.log('11111',dataType)
         return (event) => {
           // console.log(dataType,event.target.value)
-          this.setState = ({
+          this.setState({
             [dataType]: event.target.value
           })
         }
@@ -48,7 +55,7 @@
       render(){
         return (
           <form action="www.baidu.com" onSubmit={this.handleSubmit}>
-            用户名:<input onChange={this.saveFormdata('username')} type="text" placeholder="请输入用户名" name="userName" />
+            用户名:<input onChange={this.saveFormdata('username')} type="text" placeholder="请输入用户名" name="username" />
             密码:<input onChange={this.saveFormdata('password')} type="password" placeholder="请输入密码" name="password" />
             <button>登录</button>
             </form>
