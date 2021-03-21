@@ -22,9 +22,9 @@
         this.state = { isHot: false } //state是一个{} 初始化状态
 
         // 为了再回调函数中使用`this`,这个绑定是必不可少的
-        that = this
         console.log('this',this)
-        this.demo = this.demo.bind(this) //修改demo方法中的this的指向
+        this.demo = this.demo.bind(this) //修改demo方法中的this的指向    
+        // (此处右侧的this.demo是绑定到实例对象上的demo方法,右侧demo是点击事件的onClick的回调,此处这样写是因为render中的this并不是指向实例对象(此处赋值相当于是修改了this的指向))
       } //借助构造器初始化状态
       demo() {
         // console.log(this)
