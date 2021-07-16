@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="myTest"></div>
+  <script src="../js/react.development.js"></script>
+  <script src="../js/react-dom.development.js"></script>
+  <script src="../js/babel.min.js"></script>
+
+  <script type="text/babel">
+    // 定义类式组件
+    class Opacity extends React.Component {
+      state = { isOpcity: 1 }
+      action = () => {
+        this.timer = setInterval(() => {
+          let  { isOpcity } = this.state
+          isOpcity -= 0.1
+          if(isOpcity <= 0) isOpcity = 1
+          this.setState({
+            isOpcity: isOpcity
+          })
+        }, 200);
+      }
+
+      // 卸载组件
+      cancel = () => {
+        
+        // 清除定时器
+        // clearInterval(this.timer)
+        // 卸载组件
+        ReactDOM.unmountComponentAtNode(document.getElementById('myTest'))
+      }
+
+      // 组件挂载完毕
+      componentDidMount() {
+        this.action() 
+      }
+
+      // 组件将要卸载时
+      componentWillUnmount() {
+        clearInterval(this.timer)
+      }
+
+
+      // render调用的时机: 初始化渲染, 状态更新
+      render() {
+        return (
+          <div>
+            <h1 style={{opacity:this.state.isOpcity}}>React怎么学,怎么学</h1>
+            <button onClick={this.action}>开始</button>
+            <button onClick={this.cancel}>卸载组件</button>
+          </div>
+        )
+      }
+    }
+    // 渲染dom 到页面
+    ReactDOM.render(<Opacity />, document.getElementById('myTest'))
+  </script>
+</body>
+</html>

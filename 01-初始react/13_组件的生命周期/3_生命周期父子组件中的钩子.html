@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="test"></div>
+  <script src="../js/react.development.js"></script>
+  <script src="../js/react-dom.development.js"></script>
+  <script src="../js/babel.min.js"></script>
+
+  <script type="text/babel">
+    class A extends React.Component{ //组件A
+      state = { carName: '奔驰' }
+
+      changeCar = () => {
+        this.setState({
+          carName: '奥迪'
+        })
+      }
+
+      render() {
+        return (
+          <div>
+            <h1>A组件</h1>
+            <button onClick={this.changeCar}>A组件换车</button>
+            <B carName={this.state.carName} ></B>
+          </div>
+        )
+      }
+    }
+
+    class B extends React.Component {
+      // 1.父组件中render更新时,子组件中componentWillReceiveProps钩子触发
+      // 注意: 此钩子在首次获取props时并不执行
+      componentWillReceiveProps(props) {//组件将要接收新的props
+        console.log('B---componentWillReceiveProps',props)
+      }
+
+      shouldComponentUpdate() {//组件是否要被更新时 (此钩子不写默认返回值为true 写时必须注明返回值)
+        console.log('B----shouldComponentUpdate')
+        return true
+      }
+
+      componentDidUpdate() {//组件更新完成
+        console.log('B----componentDidUpdate')
+      }
+      render () {
+        return (
+          <div>
+            <h1>B组件</h1>
+            <span>B组件接收到的汽车名称为: {this.props.carName}</span>
+          </div>
+        )
+      }
+    }
+    // A组件渲染到页面
+    ReactDOM.render(<A />, document.getElementById('test'))
+  </script>
+</body>
+</html>
